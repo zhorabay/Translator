@@ -22,11 +22,9 @@ import translateText from '../redux/actions/translate';
 const TranslatorComponent = () => {
   const dispatch = useDispatch();
 
-  // State for input and target language
   const [inputText, setInputText] = useState('');
   const [targetLanguage, setTargetLanguage] = useState('en');
 
-  // Redux state selectors
   const detectedLanguage = useSelector(selectDetectedLanguage);
   const languages = useSelector(selectLanguages);
   const translatedText = useSelector(selectTranslatedText);

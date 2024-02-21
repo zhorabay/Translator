@@ -1,14 +1,18 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import TranslatorComponent from './components/translator';
 
 function App() {
   return (
-    <main className="App">
-      <Routes>
-        <Route element={<TranslatorComponent />} path="/" />
-      </Routes>
-    </main>
+    <Router>
+      <main className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<TranslatorComponent />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }
 
