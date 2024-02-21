@@ -69,8 +69,8 @@ const TranslatorComponent = () => {
   return (
     <div>
       <textarea value={inputText} onChange={handleInputChange} />
-      <button onClick={handleDetectLanguage}>Detect Language</button>
-      <button onClick={handleGetLanguages}>Get Supported Languages</button>
+      <button type="button" onClick={handleDetectLanguage}>Detect Language</button>
+      <button type="button" onClick={handleGetLanguages}>Get Supported Languages</button>
       <select value={targetLanguage} onChange={handleTargetLanguageChange}>
         {languages.map((lang) => (
           <option key={lang.code} value={lang.code}>
@@ -78,11 +78,20 @@ const TranslatorComponent = () => {
           </option>
         ))}
       </select>
-      <button onClick={handleTranslate}>Translate</button>
+      <button type="button" onClick={handleTranslate}>Translate</button>
       <div>
-        <h3>Detected Language: {detectedLanguage}</h3>
-        <p>Supported Languages: {languages.map((lang) => lang.name).join(', ')}</p>
-        <p>Translated Text: {translatedText}</p>
+        <h3>
+          Detected Language:
+          {detectedLanguage}
+        </h3>
+        <p>
+          Supported Languages:
+          {languages.map((lang) => lang.name).join(', ')}
+        </p>
+        <p>
+          Translated Text:
+          {translatedText}
+        </p>
       </div>
     </div>
   );
