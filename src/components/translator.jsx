@@ -18,6 +18,7 @@ import {
 import detectLanguage from '../redux/actions/detect';
 import getSupportedLanguages from '../redux/actions/languages';
 import translateText from '../redux/actions/translate';
+import '../style/style.css';
 
 const TranslatorComponent = () => {
   const dispatch = useDispatch();
