@@ -1,5 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { TbGridDots } from 'react-icons/tb';
+import { CgProfile } from 'react-icons/cg';
+import google from '../media/google.jpg';
 
 const Navbar = () => {
   const handleActive = (nav) => (nav.isActive ? 'active-link' : '');
@@ -7,19 +11,26 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="brand">
-        <p className="brand-name">
-          Translator
-        </p>
+        <NavLink to="/" id="navlink-name">
+          <img src={google} alt="google" className="brand-img" />
+          Translate
+        </NavLink>
       </div>
       <ul className="nav-list">
         <li>
-          <NavLink to="/" className={handleActive}>MainPage</NavLink>
+          <NavLink to="/settings" className={handleActive} id="navlink">
+            <IoSettingsOutline />
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/about" className={handleActive}>About</NavLink>
+          <NavLink to="/menu" className={handleActive} id="navlink">
+            <TbGridDots />
+          </NavLink>
         </li>
         <li className="my-profile-link">
-          <NavLink to="/profile" className={handleActive}>My Profile</NavLink>
+          <NavLink to="/profile" className={handleActive} id="navlink-profile">
+            <CgProfile />
+          </NavLink>
         </li>
       </ul>
     </header>

@@ -66,7 +66,7 @@ const TranslatorComponent = () => {
   };
 
   return (
-    <div>
+    <div className="main">
       <textarea value={inputText} onChange={handleInputChange} />
       <button type="button" onClick={handleDetectLanguage}>Detect Language</button>
       <button type="button" onClick={handleGetLanguages}>Get Supported Languages</button>
