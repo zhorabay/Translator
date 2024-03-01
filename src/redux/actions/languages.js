@@ -5,7 +5,7 @@ import {
   setLanguagesLoading,
 } from '../slices/languageSlice';
 
-const getSupportedLanguages = () => async (dispatch) => {
+const fetchLanguages = () => async (dispatch) => {
   try {
     dispatch(setLanguagesLoading(true));
 
@@ -29,4 +29,4 @@ const getSupportedLanguages = () => async (dispatch) => {
   }
 };
 
-export default getSupportedLanguages;
+export default fetchLanguages;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { PiMicrophoneLight } from 'react-icons/pi';
-import { RiPencilFill } from 'react-icons/ri';
+import React, { useState, useEffect } from 'react';
+// import { PiMicrophoneLight } from 'react-icons/pi';
+// import { RiPencilFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setDetectedLanguage,
@@ -8,9 +8,7 @@ import {
   selectDetectedLanguage,
 } from '../redux/slices/detectSlice';
 import {
-  setLanguages,
   setError as setLanguageError,
-  selectLanguages,
 } from '../redux/slices/languageSlice';
 import {
   setTranslatedText,
@@ -18,11 +16,11 @@ import {
   selectTranslatedText,
 } from '../redux/slices/translateSlice';
 import detectLanguageAction from '../redux/actions/detect';
-import getSupportedLanguages from '../redux/actions/languages';
+import fetchLanguages from '../redux/actions/languages';
 import translateText from '../redux/actions/translate';
 import '../style/style.css';
 
-const TranslatorComponent = () => {
+function TranslatorComponent() {
   const dispatch = useDispatch();
 
   const [inputText, setInputText] = useState('');
@@ -33,45 +31,57 @@ const TranslatorComponent = () => {
   const languages = useSelector((state) => state.language.languages);
   const translatedText = useSelector(selectTranslatedText);
 
-  const handleInputChange = (e) => {
+  useEffect(() => {
+    const fetchSupportedLanguages = async () => {
+      try {
+        dispatch(fetchLanguages());
+      } catch (error) {
+        console.error('Error getting supported languages:', error);
+      }
+    };
+
+    fetchSupportedLanguages();
+  }, [dispatch]);
+
+  const handleInputChange = async (e) => {
     const newText = e.target.value;
     setInputText(newText);
 
-    dispatch(detectLanguageAction(newText));
+    try {
+      const detected = await dispatch(detectLanguageAction(newText));
+      dispatch(setDetectedLanguage(detected));
+      setIsLanguageDetected(true);
+
+      const translation = await dispatch(translateText(newText, targetLanguage));
+      dispatch(setTranslatedText(translation));
+    } catch (error) {
+      console.error('Error processing translation:', error);
+      dispatch(setTranslateError(error.message));
+    }
   };
 
   const handleTargetLanguageChange = (e) => {
-    setTargetLanguage(e.target.value);
+    const selectedLanguage = e.target.value;
+    setTargetLanguage(selectedLanguage);
   };
 
   const handleDetectLanguage = async () => {
     try {
-      const detected = await detectLanguage(inputText);
+      const detected = await dispatch(detectLanguageAction(inputText));
       dispatch(setDetectedLanguage(detected));
       setIsLanguageDetected(true);
     } catch (error) {
-      console.error("Error detecting language:", error);
+      console.error('Error detecting language:', error);
       dispatch(setDetectError(error.message));
     }
   };
 
   const handleGetLanguages = async () => {
     try {
-      const languageList = await getSupportedLanguages();
-      dispatch(setLanguages(languageList));
+      await dispatch(fetchLanguages());
     } catch (error) {
-      console.error("Error getting supported languages:", error);
+      console.error('Error getting supported languages:', error);
       dispatch(setLanguageError(error.message));
-    }
-  };
-  
-  const handleTranslate = async () => {
-    try {
-      const translation = await translateText(inputText, targetLanguage);
-      dispatch(setTranslatedText(translation));
-    } catch (error) {
-      console.error("Error translating text:", error);
-      dispatch(setTranslateError(error.message));
     }
   };
 
@@ -81,38 +91,31 @@ const TranslatorComponent = () => {
         {isLanguageDetected ? (
           <h3>
             Detected:
-            {detectedLanguage && detectedLanguage.data && detectedLanguage.data.detections && detectedLanguage.data.detections[0][0]?.language}
+            {detectedLanguage
+            && detectedLanguage.data
+            && detectedLanguage.data.detections
+            && detectedLanguage.data.detections.language}
           </h3>
         ) : (
           <button type="button" onClick={handleDetectLanguage} className="detect-btn">
             Detect Language
           </button>
         )}
-        <label htmlFor="targetLanguage">Choose Target Language:</label>
-        <select id="targetLanguage" value={targetLanguage} onClick={handleGetLanguages} onChange={handleTargetLanguageChange}>
-          {Array.isArray(languages) &&
-            languages.map((lang) => (
-              <option key={lang.code} value={lang.code}>
-                {lang.name}
-              </option>
-            ))}
-        </select>
-        <textarea value={inputText} onChange={handleInputChange} placeholder={<PiMicrophoneLight /> && <RiPencilFill />} className="textarea-1" />
+        <textarea value={inputText} onChange={handleInputChange} className="textarea-1" />
       </div>
       <div className="block-two">
-        <h3>
-          Detected Language:
-          {detectedLanguage && detectedLanguage.detections && detectedLanguage.detections[0]?.language}
-        </h3>
-        <p>
-          Supported Languages:
-          {Array.isArray(languages) ? languages.map((lang) => lang.name).join(', ') : ''}
-        </p>
-        <textarea placeholder="Translation" className="textarea-2" value={translatedText} />
+        <select id="targetLanguage" value={targetLanguage} onClick={handleGetLanguages} onChange={handleTargetLanguageChange}>
+          {Array.isArray(languages)
+          && languages.map((lang) => (
+            <option key={lang.code} value={lang.code}>
+              {lang.name}
+            </option>
+          ))}
+        </select>
+        <textarea placeholder="Translation" className="textarea-2" value={translatedText || ''} />
       </div>
-      {/* <button type="button" onClick={handleTranslate}>Translate</button> */}
     </div>
   );
-};
+}
 
 export default TranslatorComponent;

@@ -8,7 +8,7 @@ const translateSlice = createSlice({
   },
   reducers: {
     setTranslatedText: (state, action) => {
-      state.translatedText = action.payload;
+      state.translatedText = action.payload.translatedText;
     },
     setError: (state, action) => {
       state.error = action.payload;

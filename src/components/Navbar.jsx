@@ -5,7 +5,7 @@ import { TbGridDots } from 'react-icons/tb';
 import { CgProfile } from 'react-icons/cg';
 import google from '../media/google.jpg';
 
-const Navbar = () => {
+function Navbar() {
   const handleActive = (nav) => (nav.isActive ? 'active-link' : '');
 
   return (
@@ -35,6 +35,6 @@ const Navbar = () => {
       </ul>
     </header>
   );
-};
+}
 
 export default Navbar;
