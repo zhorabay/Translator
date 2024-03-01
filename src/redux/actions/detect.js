@@ -4,7 +4,7 @@ import {
   setError as setDetectError,
 } from '../slices/detectSlice';
 
-const detectLanguage = (text) => async (dispatch) => {
+const detectLanguageAction = (text) => async (dispatch) => {
   const encodedParams = new URLSearchParams();
   encodedParams.set('q', text);
 
@@ -13,7 +13,6 @@ const detectLanguage = (text) => async (dispatch) => {
     url: 'https://google-translate1.p.rapidapi.com/language/translate/v2/detect',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
-      'Accept-Encoding': 'application/gzip',
       'X-RapidAPI-Key': 'c96a4b6a2bmsha770b953494a3c3p19181ejsn7420abcde0df',
       'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com',
     },
@@ -28,4 +27,4 @@ const detectLanguage = (text) => async (dispatch) => {
   }
 };
 
-export default detectLanguage;
+export default detectLanguageAction;

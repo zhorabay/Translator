@@ -18,6 +18,6 @@ const detectSlice = createSlice({
 
 export const { setDetectedLanguage, setError } = detectSlice.actions;
 export const selectDetectedLanguage = (state) => state.detect.detectedLanguage;
-export const selectError = (state) => state.detect.error;
+export const selectDetectError = (state) => state.detect.error;
 
 export default detectSlice.reducer;
