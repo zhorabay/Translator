@@ -6,7 +6,7 @@
 # 📗 Table of Contents
 
 - [📗 Table of Contents](#-table-of-contents)
-- [📖 The Translator app ](#-the-blog-app-)
+- [📖 The Translator app ](#-the-translator-app-)
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
@@ -14,7 +14,6 @@
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
     - [Install](#install)
-    - [💾 Database](#-database)
     - [Usage](#usage)
     - [Run tests](#run-tests)
   - [👥 Authors ](#-authors-)
@@ -26,7 +25,7 @@
 
 
 
-# 📖 The Translator app <a name="about-project"></a>
+# 📖 The Translator app <a name="the-translator-app"></a>
 
 **The Translator app** 
 
