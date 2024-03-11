@@ -26,7 +26,7 @@
 
 # 📖 The Translator app <a name="the-translator-app"></a>
 
-**The Translator app** 
+**The Translator app** is to translate words and sentences
 
 ## 🛠 Built With <a name="built-with"></a>
 
