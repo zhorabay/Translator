@@ -26,7 +26,7 @@
 
 # 📖 The Translator app <a name="the-translator-app"></a>
 
-**The Translator app** is to translate words and sentences
+**The Translator app** translates the words and sentences from the auto-detected language to the chosen language.
 
 ## 🛠 Built With <a name="built-with"></a>
 
