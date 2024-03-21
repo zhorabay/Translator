@@ -12,7 +12,7 @@ function Navbar() {
     <header className="navbar">
       <div className="brand">
         <NavLink to="/" id="navlink-name">
-          <img src={google} alt="google" className="brand-img" />
+          <img src={google} alt="google" className="brand-img" id="brand" />
           Translate
         </NavLink>
       </div>
