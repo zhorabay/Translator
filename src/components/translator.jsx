@@ -87,7 +87,7 @@ function TranslatorComponent() {
 
   return (
     <div className="main">
-      <div className="block-one">
+      <div className="block-one" id="block-one">
         {isLanguageDetected ? (
           <h3>
             Detected:
