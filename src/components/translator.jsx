@@ -7,9 +7,9 @@ import {
   setError as setDetectError,
   selectDetectedLanguage,
 } from '../redux/slices/detectSlice';
-import {
-  setError as setLanguageError,
-} from '../redux/slices/languageSlice';
+// import {
+//   setError as setLanguageError,
+// } from '../redux/slices/languageSlice';
 import {
   setTranslatedText,
   setError as setTranslateError,
@@ -34,7 +34,7 @@ function TranslatorComponent() {
   useEffect(() => {
     const fetchSupportedLanguages = async () => {
       try {
-        dispatch(fetchLanguages());
+        await dispatch(fetchLanguages());
       } catch (error) {
         console.error('Error getting supported languages:', error);
       }
@@ -76,14 +76,14 @@ function TranslatorComponent() {
     }
   };
 
-  const handleGetLanguages = async () => {
-    try {
-      await dispatch(fetchLanguages());
-    } catch (error) {
-      console.error('Error getting supported languages:', error);
-      dispatch(setLanguageError(error.message));
-    }
-  };
+  // const handleGetLanguages = async () => {
+  //   try {
+  //     await dispatch(fetchLanguages());
+  //   } catch (error) {
+  //     console.error('Error getting supported languages:', error);
+  //     dispatch(setLanguageError(error.message));
+  //   }
+  // };
 
   return (
     <div className="main">
@@ -92,9 +92,9 @@ function TranslatorComponent() {
           <h3>
             Detected:
             {detectedLanguage
-            && detectedLanguage.data
-            && detectedLanguage.data.detections
-            && detectedLanguage.data.detections.language}
+              && detectedLanguage.data
+              && detectedLanguage.data.detections
+              && detectedLanguage.data.detections.language}
           </h3>
         ) : (
           <button type="button" onClick={handleDetectLanguage} className="detect-btn">
@@ -104,14 +104,19 @@ function TranslatorComponent() {
         <textarea value={inputText} onChange={handleInputChange} className="textarea-1" />
       </div>
       <div className="block-two">
-        <select id="targetLanguage" value={targetLanguage} onClick={handleGetLanguages} onChange={handleTargetLanguageChange}>
-          {Array.isArray(languages)
-          && languages.map((lang) => (
+      {languages && languages.data && Array.isArray(languages.data.languages) && (
+        <select
+          id="targetLanguage"
+          value={targetLanguage}
+          onChange={handleTargetLanguageChange}
+        >
+          {languages.data.languages.map((lang) => (
             <option key={lang.code} value={lang.code}>
               {lang.name}
             </option>
           ))}
         </select>
+      )}
         <textarea placeholder="Translation" className="textarea-2" value={translatedText || ''} />
       </div>
     </div>
